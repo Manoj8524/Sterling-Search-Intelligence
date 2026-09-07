@@ -1,0 +1,25 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="40" y1="40" x2="216" y2="216" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Card -->
+  <rect width="256" height="256" rx="56" fill="url(#bgGrad)"/>
+  <!-- Outer Intelligence Ring -->
+  <circle cx="120" cy="120" r="72" stroke="url(#accentGrad)" stroke-width="16" fill="none"/>
+  <!-- Search Magnifier Handle -->
+  <path d="M168 168L208 208" stroke="url(#accentGrad)" stroke-width="20" stroke-linecap="round"/>
+  <!-- Stylized Sterling Monogram S -->
+  <path d="M136 92C136 83.1634 128.837 76 120 76H104C95.1634 76 88 83.1634 88 92V96C88 104.837 95.1634 112 104 112H132C140.837 112 148 119.163 148 128V132C148 140.837 140.837 148 132 148H116C107.163 148 100 140.837 100 132" stroke="#ffffff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="184" cy="68" r="9" fill="url(#goldGrad)"/>
+</svg>

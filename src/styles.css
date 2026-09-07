@@ -1,0 +1,185 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Sterling Search Intelligence design system.
+ * Deep navy + Sterling blue + light blue-grey surfaces.
+ * All colors in oklch. Never hardcode colors in components.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-navy: var(--navy);
+  --color-navy-foreground: var(--navy-foreground);
+  --color-seo: var(--seo);
+  --color-aeo: var(--aeo);
+  --color-geo: var(--geo);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --shadow-soft: 0 1px 2px oklch(0.2 0.06 255 / 0.05), 0 8px 24px oklch(0.2 0.06 255 / 0.06);
+  --shadow-lift: 0 2px 4px oklch(0.2 0.06 255 / 0.06), 0 18px 42px oklch(0.2 0.06 255 / 0.12);
+}
+
+:root {
+  --radius: 0.85rem;
+  --background: oklch(0.977 0.006 250);
+  --foreground: oklch(0.22 0.045 255);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.045 255);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.045 255);
+  --primary: oklch(0.51 0.16 254);
+  --primary-foreground: oklch(0.99 0.004 250);
+  --secondary: oklch(0.955 0.012 250);
+  --secondary-foreground: oklch(0.28 0.06 256);
+  --muted: oklch(0.958 0.01 250);
+  --muted-foreground: oklch(0.53 0.033 254);
+  --accent: oklch(0.938 0.028 245);
+  --accent-foreground: oklch(0.3 0.08 256);
+  --destructive: oklch(0.575 0.215 25);
+  --destructive-foreground: oklch(0.99 0.004 250);
+  --border: oklch(0.915 0.014 250);
+  --input: oklch(0.915 0.014 250);
+  --ring: oklch(0.51 0.16 254);
+
+  --navy: oklch(0.235 0.062 262);
+  --navy-foreground: oklch(0.965 0.01 250);
+  --seo: oklch(0.55 0.16 250);
+  --aeo: oklch(0.62 0.13 195);
+  --geo: oklch(0.62 0.17 305);
+  --success: oklch(0.6 0.13 158);
+  --success-foreground: oklch(0.99 0.004 250);
+  --warning: oklch(0.75 0.15 75);
+  --warning-foreground: oklch(0.25 0.05 75);
+
+  --chart-1: oklch(0.55 0.16 250);
+  --chart-2: oklch(0.62 0.13 195);
+  --chart-3: oklch(0.62 0.17 305);
+  --chart-4: oklch(0.72 0.15 75);
+  --chart-5: oklch(0.6 0.13 158);
+
+  --sidebar: oklch(0.235 0.062 262);
+  --sidebar-foreground: oklch(0.86 0.02 250);
+  --sidebar-primary: oklch(0.62 0.16 250);
+  --sidebar-primary-foreground: oklch(0.99 0.004 250);
+  --sidebar-accent: oklch(0.3 0.065 260);
+  --sidebar-accent-foreground: oklch(0.98 0.005 250);
+  --sidebar-border: oklch(0.32 0.05 260);
+  --sidebar-ring: oklch(0.62 0.16 250);
+}
+
+.dark {
+  --background: oklch(0.19 0.045 262);
+  --foreground: oklch(0.96 0.008 250);
+  --card: oklch(0.235 0.05 262);
+  --card-foreground: oklch(0.96 0.008 250);
+  --popover: oklch(0.235 0.05 262);
+  --popover-foreground: oklch(0.96 0.008 250);
+  --primary: oklch(0.65 0.16 252);
+  --primary-foreground: oklch(0.16 0.04 262);
+  --secondary: oklch(0.29 0.05 262);
+  --secondary-foreground: oklch(0.96 0.008 250);
+  --muted: oklch(0.29 0.05 262);
+  --muted-foreground: oklch(0.72 0.03 252);
+  --accent: oklch(0.32 0.06 258);
+  --accent-foreground: oklch(0.96 0.008 250);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.65 0.16 252);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.018em;
+  }
+}
+
+@utility surface-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+}
+
+@utility gradient-navy {
+  background-image: linear-gradient(
+    135deg,
+    oklch(0.235 0.062 262) 0%,
+    oklch(0.3 0.09 258) 55%,
+    oklch(0.38 0.12 252) 100%
+  );
+}
+
+@utility gradient-brand {
+  background-image: linear-gradient(120deg, oklch(0.51 0.16 254) 0%, oklch(0.62 0.14 226) 100%);
+}
+
+@utility text-gradient-brand {
+  background-image: linear-gradient(100deg, oklch(0.35 0.1 258), oklch(0.55 0.16 250));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility scroll-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
