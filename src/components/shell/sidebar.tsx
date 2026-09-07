@@ -90,16 +90,16 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const isActive = (to: string) => (to === "/" ? pathname === "/" : pathname === to);
 
   return (
-    <aside className="flex h-full w-[264px] shrink-0 flex-col bg-sidebar text-sidebar-foreground">
-      <div className="flex items-center gap-3 px-5 py-5">
-        <span className="flex size-9 items-center justify-center rounded-xl gradient-brand text-primary-foreground">
+    <aside className="relative z-20 flex h-full w-[264px] shrink-0 flex-col bg-sidebar text-sidebar-foreground select-none">
+      <Link to="/" onClick={onNavigate} className="flex items-center gap-3 px-5 py-5 transition-opacity hover:opacity-90">
+        <span className="flex size-9 items-center justify-center rounded-xl gradient-brand text-primary-foreground shadow-sm">
           <BarChart3 className="size-5" />
         </span>
         <div className="leading-tight">
           <p className="text-sm font-bold text-sidebar-accent-foreground">Sterling</p>
           <p className="text-[11px] tracking-wide text-sidebar-foreground/70">Search Intelligence</p>
         </div>
-      </div>
+      </Link>
 
       <nav className="flex-1 space-y-1 overflow-y-auto px-3 pb-6">
         {navGroups.map((group) => {
@@ -110,10 +110,11 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                 key={group.label}
                 to={group.to}
                 onClick={onNavigate}
+                preload="intent"
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 cursor-pointer select-none active:scale-[0.98]",
                   isActive(group.to)
-                    ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                    ? "bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-xs"
                     : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                 )}
               >
@@ -142,10 +143,11 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                     key={item.to}
                     to={item.to}
                     onClick={onNavigate}
+                    preload="intent"
                     className={cn(
-                      "flex items-center gap-3 rounded-lg py-1.5 pr-3 pl-8 text-sm transition-colors",
+                      "flex items-center gap-3 rounded-lg py-1.5 pr-3 pl-8 text-sm transition-all duration-150 cursor-pointer select-none active:scale-[0.98]",
                       isActive(item.to)
-                        ? "bg-sidebar-primary font-medium text-sidebar-primary-foreground"
+                        ? "bg-sidebar-primary font-semibold text-sidebar-primary-foreground shadow-xs"
                         : "text-sidebar-foreground/85 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                     )}
                   >
@@ -160,7 +162,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 
       <div className="border-t border-sidebar-border px-5 py-4">
         <p className="text-[11px] leading-relaxed text-sidebar-foreground/60">
-          Demo environment · mock data only
+          Sterling Search Intelligence v1.0
         </p>
       </div>
     </aside>
