@@ -8,6 +8,9 @@ export default defineConfig({
   plugins: [
     tanstackStart({
       server: { entry: "server" },
+      prerender: {
+        routes: ["/"],
+      },
     }),
     react(),
     tailwindcss(),
