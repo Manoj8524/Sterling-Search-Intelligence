@@ -53,36 +53,38 @@ export function TrendChart({
   domain?: [number, number];
 }) {
   return (
-    <ResponsiveContainer width="100%" height={height}>
-      <AreaChart data={data} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
-        <defs>
+    <div style={{ width: "100%", height, minHeight: height }} className="overflow-hidden">
+      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+        <AreaChart data={data} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
+          <defs>
+            {series.map((s) => (
+              <linearGradient key={s.key} id={`grad-${s.key}`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={s.color} stopOpacity={0.28} />
+                <stop offset="100%" stopColor={s.color} stopOpacity={0} />
+              </linearGradient>
+            ))}
+          </defs>
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+          <XAxis dataKey={xKey} {...axis} />
+          <YAxis domain={domain} {...axis} />
+          <Tooltip {...tooltipStyle} />
+          <Legend iconType="circle" wrapperStyle={{ fontSize: 12, paddingTop: 8 }} />
           {series.map((s) => (
-            <linearGradient key={s.key} id={`grad-${s.key}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={s.color} stopOpacity={0.28} />
-              <stop offset="100%" stopColor={s.color} stopOpacity={0} />
-            </linearGradient>
+            <Area
+              key={s.key}
+              type="monotone"
+              dataKey={s.key}
+              name={s.label}
+              stroke={s.color}
+              strokeWidth={2.4}
+              fill={`url(#grad-${s.key})`}
+              dot={false}
+              activeDot={{ r: 4 }}
+            />
           ))}
-        </defs>
-        <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-        <XAxis dataKey={xKey} {...axis} />
-        <YAxis domain={domain} {...axis} />
-        <Tooltip {...tooltipStyle} />
-        <Legend iconType="circle" wrapperStyle={{ fontSize: 12, paddingTop: 8 }} />
-        {series.map((s) => (
-          <Area
-            key={s.key}
-            type="monotone"
-            dataKey={s.key}
-            name={s.label}
-            stroke={s.color}
-            strokeWidth={2.4}
-            fill={`url(#grad-${s.key})`}
-            dot={false}
-            activeDot={{ r: 4 }}
-          />
-        ))}
-      </AreaChart>
-    </ResponsiveContainer>
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
@@ -98,26 +100,28 @@ export function LinesChart({
   height?: number;
 }) {
   return (
-    <ResponsiveContainer width="100%" height={height}>
-      <LineChart data={data} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-        <XAxis dataKey={xKey} {...axis} />
-        <YAxis {...axis} />
-        <Tooltip {...tooltipStyle} />
-        <Legend iconType="circle" wrapperStyle={{ fontSize: 12, paddingTop: 8 }} />
-        {series.map((s) => (
-          <Line
-            key={s.key}
-            type="monotone"
-            dataKey={s.key}
-            name={s.label}
-            stroke={s.color}
-            strokeWidth={2.4}
-            dot={false}
-          />
-        ))}
-      </LineChart>
-    </ResponsiveContainer>
+    <div style={{ width: "100%", height, minHeight: height }} className="overflow-hidden">
+      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+        <LineChart data={data} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+          <XAxis dataKey={xKey} {...axis} />
+          <YAxis {...axis} />
+          <Tooltip {...tooltipStyle} />
+          <Legend iconType="circle" wrapperStyle={{ fontSize: 12, paddingTop: 8 }} />
+          {series.map((s) => (
+            <Line
+              key={s.key}
+              type="monotone"
+              dataKey={s.key}
+              name={s.label}
+              stroke={s.color}
+              strokeWidth={2.4}
+              dot={false}
+            />
+          ))}
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
@@ -138,32 +142,34 @@ export function SimpleBarChart({
 }) {
   const palette = colors ?? ["var(--chart-1)"];
   return (
-    <ResponsiveContainer width="100%" height={height}>
-      <BarChart
-        data={data}
-        layout={horizontal ? "vertical" : "horizontal"}
-        margin={{ top: 8, right: 12, left: horizontal ? 20 : -18, bottom: 0 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={horizontal} horizontal={!horizontal} />
-        {horizontal ? (
-          <>
-            <XAxis type="number" {...axis} />
-            <YAxis type="category" dataKey={xKey} width={116} {...axis} />
-          </>
-        ) : (
-          <>
-            <XAxis dataKey={xKey} {...axis} />
-            <YAxis {...axis} />
-          </>
-        )}
-        <Tooltip {...tooltipStyle} cursor={{ fill: "var(--muted)" }} />
-        <Bar dataKey={barKey} radius={horizontal ? [0, 6, 6, 0] : [6, 6, 0, 0]}>
-          {data.map((_, i) => (
-            <Cell key={i} fill={palette[i % palette.length]} />
-          ))}
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
+    <div style={{ width: "100%", height, minHeight: height }} className="overflow-hidden">
+      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+        <BarChart
+          data={data}
+          layout={horizontal ? "vertical" : "horizontal"}
+          margin={{ top: 8, right: 12, left: horizontal ? 20 : -18, bottom: 0 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={horizontal} horizontal={!horizontal} />
+          {horizontal ? (
+            <>
+              <XAxis type="number" {...axis} />
+              <YAxis type="category" dataKey={xKey} width={116} {...axis} />
+            </>
+          ) : (
+            <>
+              <XAxis dataKey={xKey} {...axis} />
+              <YAxis {...axis} />
+            </>
+          )}
+          <Tooltip {...tooltipStyle} cursor={{ fill: "var(--muted)" }} />
+          <Bar dataKey={barKey} radius={horizontal ? [0, 6, 6, 0] : [6, 6, 0, 0]}>
+            {data.map((_, i) => (
+              <Cell key={i} fill={palette[i % palette.length]} />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
@@ -179,18 +185,20 @@ export function GroupedBarChart({
   height?: number;
 }) {
   return (
-    <ResponsiveContainer width="100%" height={height}>
-      <BarChart data={data} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-        <XAxis dataKey={xKey} {...axis} />
-        <YAxis {...axis} />
-        <Tooltip {...tooltipStyle} cursor={{ fill: "var(--muted)" }} />
-        <Legend iconType="circle" wrapperStyle={{ fontSize: 12, paddingTop: 8 }} />
-        {series.map((s) => (
-          <Bar key={s.key} dataKey={s.key} name={s.label} fill={s.color} radius={[5, 5, 0, 0]} />
-        ))}
-      </BarChart>
-    </ResponsiveContainer>
+    <div style={{ width: "100%", height, minHeight: height }} className="overflow-hidden">
+      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+        <BarChart data={data} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+          <XAxis dataKey={xKey} {...axis} />
+          <YAxis {...axis} />
+          <Tooltip {...tooltipStyle} cursor={{ fill: "var(--muted)" }} />
+          <Legend iconType="circle" wrapperStyle={{ fontSize: 12, paddingTop: 8 }} />
+          {series.map((s) => (
+            <Bar key={s.key} dataKey={s.key} name={s.label} fill={s.color} radius={[5, 5, 0, 0]} />
+          ))}
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 

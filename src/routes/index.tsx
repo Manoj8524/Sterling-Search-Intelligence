@@ -67,6 +67,57 @@ const opportunities = [
   },
 ];
 
+const overviewColumns: Column<Resort>[] = [
+  {
+    key: "name",
+    header: "Resort",
+    sortValue: (r) => r.name,
+    render: (r) => (
+      <div>
+        <Link
+          to="/resorts/$resortId"
+          params={{ resortId: r.id }}
+          className="font-medium hover:text-primary hover:underline"
+        >
+          {r.name}
+        </Link>
+        <p className="text-xs text-muted-foreground">
+          {r.city}, {r.state}
+        </p>
+      </div>
+    ),
+  },
+  { key: "seo", header: "SEO", align: "center", sortValue: (r) => r.seo, render: (r) => <ScoreBadge value={r.seo} /> },
+  { key: "aeo", header: "AEO", align: "center", sortValue: (r) => r.aeo, render: (r) => <ScoreBadge value={r.aeo} /> },
+  { key: "geo", header: "GEO", align: "center", sortValue: (r) => r.geo, render: (r) => <ScoreBadge value={r.geo} /> },
+  {
+    key: "overall",
+    header: "Overall",
+    align: "center",
+    sortValue: (r) => r.overall,
+    render: (r) => <ScoreBadge value={r.overall} className="min-w-12 text-sm" />,
+  },
+  {
+    key: "opportunities",
+    header: "Opportunities",
+    align: "right",
+    sortValue: (r) => r.opportunities,
+    render: (r) => <span className="font-medium tabular-nums">{r.opportunities}</span>,
+  },
+  {
+    key: "open",
+    header: "",
+    align: "right",
+    render: (r) => (
+      <Button asChild variant="ghost" size="sm">
+        <Link to="/resorts/$resortId" params={{ resortId: r.id }}>
+          Open
+        </Link>
+      </Button>
+    ),
+  },
+];
+
 function Overview() {
   const { isAll, resortId, resortName } = useApp();
   const [active, setActive] = useState<string[]>(["seo", "aeo", "geo", "overall"]);
@@ -79,57 +130,6 @@ function Overview() {
     const q = search.trim().toLowerCase();
     return q ? base.filter((r) => r.name.toLowerCase().includes(q) || r.city.toLowerCase().includes(q)) : base;
   }, [isAll, resortId, search]);
-
-  const columns: Column<Resort>[] = [
-    {
-      key: "name",
-      header: "Resort",
-      sortValue: (r) => r.name,
-      render: (r) => (
-        <div>
-          <Link
-            to="/resorts/$resortId"
-            params={{ resortId: r.id }}
-            className="font-medium hover:text-primary hover:underline"
-          >
-            {r.name}
-          </Link>
-          <p className="text-xs text-muted-foreground">
-            {r.city}, {r.state}
-          </p>
-        </div>
-      ),
-    },
-    { key: "seo", header: "SEO", align: "center", sortValue: (r) => r.seo, render: (r) => <ScoreBadge value={r.seo} /> },
-    { key: "aeo", header: "AEO", align: "center", sortValue: (r) => r.aeo, render: (r) => <ScoreBadge value={r.aeo} /> },
-    { key: "geo", header: "GEO", align: "center", sortValue: (r) => r.geo, render: (r) => <ScoreBadge value={r.geo} /> },
-    {
-      key: "overall",
-      header: "Overall",
-      align: "center",
-      sortValue: (r) => r.overall,
-      render: (r) => <ScoreBadge value={r.overall} className="min-w-12 text-sm" />,
-    },
-    {
-      key: "opportunities",
-      header: "Opportunities",
-      align: "right",
-      sortValue: (r) => r.opportunities,
-      render: (r) => <span className="font-medium tabular-nums">{r.opportunities}</span>,
-    },
-    {
-      key: "open",
-      header: "",
-      align: "right",
-      render: (r) => (
-        <Button asChild variant="ghost" size="sm">
-          <Link to="/resorts/$resortId" params={{ resortId: r.id }}>
-            Open
-          </Link>
-        </Button>
-      ),
-    },
-  ];
 
   return (
     <>
@@ -232,7 +232,7 @@ function Overview() {
       >
         <DataTable
           rows={rows}
-          columns={columns}
+          columns={overviewColumns}
           getRowKey={(r) => r.id}
           initialSort={{ key: "overall", dir: "desc" }}
           emptyTitle="No resorts match your search"
