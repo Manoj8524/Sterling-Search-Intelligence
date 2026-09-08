@@ -1,18 +1,35 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import tsconfigPaths from "vite-tsconfig-paths";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 
 export default defineConfig({
+  resolve: {
+    tsconfigPaths: true,
+  },
   plugins: [
     TanStackRouterVite({
       autoCodeSplitting: true,
     }),
     react(),
     tailwindcss(),
-    tsconfigPaths(),
   ],
+  optimizeDeps: {
+    include: [
+      "react",
+      "react-dom",
+      "react-dom/client",
+      "@tanstack/react-router",
+      "@tanstack/react-query",
+      "recharts",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge",
+      "date-fns",
+      "sonner",
+      "zod",
+    ],
+  },
   build: {
     target: "esnext",
     cssMinify: true,
