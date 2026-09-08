@@ -37,6 +37,57 @@ const inBand = (v: number, band: string) =>
   (band === "50–64" && v >= 50 && v < 65) ||
   (band === "Below 50" && v < 50);
 
+const resortColumns: Column<Resort>[] = [
+  {
+    key: "name",
+    header: "Resort",
+    sortValue: (r) => r.name,
+    render: (r) => (
+      <div>
+        <p className="font-medium">{r.name}</p>
+        <p className="text-xs text-muted-foreground">
+          {r.city}, {r.state} · {r.region}
+        </p>
+      </div>
+    ),
+  },
+  { key: "seo", header: "SEO", align: "center", sortValue: (r) => r.seo, render: (r) => <ScoreBadge value={r.seo} /> },
+  { key: "aeo", header: "AEO", align: "center", sortValue: (r) => r.aeo, render: (r) => <ScoreBadge value={r.aeo} /> },
+  { key: "geo", header: "GEO", align: "center", sortValue: (r) => r.geo, render: (r) => <ScoreBadge value={r.geo} /> },
+  {
+    key: "overall",
+    header: "Overall",
+    align: "center",
+    sortValue: (r) => r.overall,
+    render: (r) => <ScoreBadge value={r.overall} className="min-w-12 text-sm" />,
+  },
+  {
+    key: "kw",
+    header: "Ranking keywords",
+    align: "right",
+    sortValue: (r) => r.rankingKeywords,
+    render: (r) => <span className="tabular-nums">{r.rankingKeywords.toLocaleString()}</span>,
+  },
+  {
+    key: "status",
+    header: "Status",
+    sortValue: (r) => r.status,
+    render: (r) => <StatusBadge value={r.status} />,
+  },
+  {
+    key: "open",
+    header: "",
+    align: "right",
+    render: (r) => (
+      <Button asChild size="sm" variant="ghost">
+        <Link to="/resorts/$resortId" params={{ resortId: r.id }}>
+          Open
+        </Link>
+      </Button>
+    ),
+  },
+];
+
 function ResortPortfolio() {
   const [view, setView] = useState<"grid" | "table">("grid");
   const [search, setSearch] = useState("");
@@ -62,57 +113,6 @@ function ResortPortfolio() {
         (status === "all" || r.status === status),
     );
   }, [search, region, state, city, seoBand, aeoBand, geoBand, status]);
-
-  const columns: Column<Resort>[] = [
-    {
-      key: "name",
-      header: "Resort",
-      sortValue: (r) => r.name,
-      render: (r) => (
-        <div>
-          <p className="font-medium">{r.name}</p>
-          <p className="text-xs text-muted-foreground">
-            {r.city}, {r.state} · {r.region}
-          </p>
-        </div>
-      ),
-    },
-    { key: "seo", header: "SEO", align: "center", sortValue: (r) => r.seo, render: (r) => <ScoreBadge value={r.seo} /> },
-    { key: "aeo", header: "AEO", align: "center", sortValue: (r) => r.aeo, render: (r) => <ScoreBadge value={r.aeo} /> },
-    { key: "geo", header: "GEO", align: "center", sortValue: (r) => r.geo, render: (r) => <ScoreBadge value={r.geo} /> },
-    {
-      key: "overall",
-      header: "Overall",
-      align: "center",
-      sortValue: (r) => r.overall,
-      render: (r) => <ScoreBadge value={r.overall} className="min-w-12 text-sm" />,
-    },
-    {
-      key: "kw",
-      header: "Ranking keywords",
-      align: "right",
-      sortValue: (r) => r.rankingKeywords,
-      render: (r) => <span className="tabular-nums">{r.rankingKeywords.toLocaleString()}</span>,
-    },
-    {
-      key: "status",
-      header: "Status",
-      sortValue: (r) => r.status,
-      render: (r) => <StatusBadge value={r.status} />,
-    },
-    {
-      key: "open",
-      header: "",
-      align: "right",
-      render: (r) => (
-        <Button asChild size="sm" variant="ghost">
-          <Link to="/resorts/$resortId" params={{ resortId: r.id }}>
-            Open
-          </Link>
-        </Button>
-      ),
-    },
-  ];
 
   return (
     <>
@@ -202,17 +202,18 @@ function ResortPortfolio() {
         </SectionCard>
       ) : view === "table" ? (
         <SectionCard>
-          <DataTable rows={rows} columns={columns} getRowKey={(r) => r.id} initialSort={{ key: "overall", dir: "desc" }} />
+          <DataTable rows={rows} columns={resortColumns} getRowKey={(r) => r.id} initialSort={{ key: "overall", dir: "desc" }} />
         </SectionCard>
       ) : (
         <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {rows.map((r) => (
             <article key={r.id} className="surface-card group overflow-hidden">
-              <div className="relative h-40 overflow-hidden">
+              <div className="relative h-40 overflow-hidden bg-muted">
                 <img
                   src={resortImages[r.image]}
                   alt={`${r.name} in ${r.city}`}
                   loading="lazy"
+                  decoding="async"
                   width={1280}
                   height={800}
                   className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
